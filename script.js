@@ -1,0 +1,636 @@
+const characters = [
+  {
+    name: "Silver",
+    portrait: "⚔️",
+    portraitImage: "image\\Silver\\Silver.png", // ใส่ path รูปได้เลย เช่น "images/silver.png"
+    color: "#c9d4e8",
+    skills: [
+      { name: "Deflect", maxCooldown: 1, currentProgress: 1},
+      { name: "Holy Slash", maxCooldown: 3, currentProgress: 3, canReset: true, active: false, canBeActive: false },
+      { name: "Rapid Strike", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false }
+    ]
+  },
+  {
+    name: "Varrik",
+    portrait: "🛡️",
+    portraitImage: "image\\Varrik\\Varrik.png", // ใส่ path รูปได้เลย เช่น "images/varrik.png"
+    color: "#d900ff",
+    skills: [
+      { name: "Battle-Hardened Body", maxCooldown: 4, currentProgress: 4, active: false, canBeActive: true, canUse: false },
+      { name: "Fugitive's Instinct", maxCooldown: 2, currentProgress: 2, active: false, canBeActive: false },
+      { name: "Disarming Fang", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false },
+      { name: "Ashfall Slam", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false },
+      { name: "Rider Kick", maxCooldown: 4, currentProgress: 4, active: false, canBeActive: false }
+    ]
+  },
+  {
+    name: "Lumira",
+    portrait: "🌙",
+    portraitImage: "image\\Lumira\\Lumira.png", // ใส่ path รูปได้เลย เช่น "images/lumira.png"
+    color: "#ffe100",
+    skills: [
+      { name: "Wings", active: false, canBeActive: true, canUse: false },
+      { name: "Stellar Bonist", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false },
+      { name: "Starry Sleep", maxCooldown: 4, currentProgress: 4, hitCooldown: 1, missCooldown: 3 },
+      { name: "Bless", maxCooldown: 3, currentProgress: 3 }
+    ]
+  },
+  {
+    name: "Feryx",
+    portrait: "🐉",
+    portraitImage: "image\\Feryx\\Feryx.png", // ใส่ path รูปได้เลย เช่น "images/feryx.png"
+    color: "#ff1100",
+    skills: [
+      { name: "Spark of Hope", maxCooldown: 3, currentProgress: 3 },
+      { name: "Charming Aria", maxCooldown: 4, currentProgress: 4 },
+      { name: "Resonance", maxCooldown: 3, currentProgress: 3 },
+      { name: "Blood Spray", maxCooldown: 3, currentProgress: 3 },
+      { name: "Dragon's Fang", maxCooldown: 4, currentProgress: 4 }
+    ]
+  },
+  {
+    name: "Gunter",
+    portrait: "🌊",
+    portraitImage: "image\\Gunter\\Gunter.png", // ใส่ path รูปได้เลย เช่น "images/gunter.png"
+    color: "#7ab8d4",
+    skills: [
+      { name: "Last Provocation", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: true },
+      { name: "Guardian's Shadow", maxCooldown: 3, currentProgress: 3 },
+      { name: "Stunning Fist", maxCooldown: 4, currentProgress: 4 },
+      { name: "Tidal Sweep", maxCooldown: 4, currentProgress: 4 }
+    ]
+  },
+  {
+    name: "Ren Ito",
+    portrait: "🗡️",
+    portraitImage: "image\\Ren\\Ren.png", // ใส่ path รูปได้เลย เช่น "images/ren.png"
+    color: "#e87aa8",
+    skills: [
+      { name: "Threaded Dagger", maxCooldown: 2, currentProgress: 2 },
+      { name: "Binding Thread", maxCooldown: 3, currentProgress: 3, hitCooldown: 3, missCooldown: 2 },
+      { name: "Crimson Thread", maxCooldown: 4, currentProgress: 4 },
+      { name: "Dancing Daggers", maxCooldown: 4, currentProgress: 4 }
+    ]
+  },
+  {
+    name: "Abdulla",
+    portrait: "🔥",
+    portraitImage: "image\\Abdulla\\Abdulla.png", // ใส่ path รูปได้เลย เช่น "images/abdulla.png"
+    color: "#ffac48",
+    skills: [
+      { name: "Drunken Stance", active: false, canBeActive: true, canUse: false },
+      { name: "Incendiary Body", active: false, canBeActive: true, canUse: false },
+      { name: "Abdulla's Molotov", maxCooldown: 2, currentProgress: 2 },
+      { name: "Heat Blast", maxCooldown: 4, currentProgress: 4 }
+    ]
+  }
+];
+
+// ============ SKILL METADATA (icons + descriptions + optional image) ============
+// image: ใส่ path รูปสกิลได้เลย เช่น "images/skills/deflect.png"
+// ถ้าไม่ใส่ image จะใช้ emoji icon แทนอัตโนมัติ
+const SKILL_META = {
+  // Silver
+  "Deflect": { icon: "🛡", image: "image\\Silver\\Deflect.png", desc: "Reaction - ปัดป้องการโจมตีศัตรูหากสำเร็จสวนกลับด้วยดาเมจ 1d4 + STR Mod" },
+  "Holy Slash": { icon: "✨", image: "image\\Silver\\Holy Slash.png", desc: "Action - พุ่งทะลุผ่านศัตรูในระยะ 15 FT ทำดาเมจ 1d4 + STR Mod - Reset หากกำจัดศัตรูได้" },
+  "Rapid Strike": { icon: "⚡", image: "image\\Silver\\Rapid Strike.png", desc: "Action - ฟาดฟันศัตรูอย่างต่อเนื่องทำดาเมจ 1d6 + STR Mod * 3" },
+  // Varrik
+  "Battle-Hardened Body": { icon: "💪", image: "image\\Varrik\\1220.png", desc: "Action - เพิ่มค่า AC 1d2 คงอยู่ 2 เทิร์น" },
+  "Fugitive's Instinct": { icon: "👣", image: "image\\Varrik\\1221.png", desc: "Bonus Action - เคลื่อนที่อย่างรวดเร็ว 15 FT" },
+  "Disarming Fang": { icon: "🦷", image: "image\\Varrik\\Untitled design (16).png", desc: "Action - พุ่งในระยะ 15 FT เข้าไปปัดอาวุธศัตรู ศัตรูต้องทอย STR Save 12" },
+  "Ashfall Slam": { icon: "🌋", image: "image\\Varrik\\Untitled design (18).png", desc: "Action - ทุ่มศัตรูลงพื้นทำดาเมจ 1d6 + STR Mod ศัตรูติดสถานะ Prone" },
+  "Rider Kick": { icon: "🦵", image: "image\\Varrik\\3175.png", desc: "Action - กระโดดขึ้นเเล้วพุ่งลงมาโจมตีศัตรูในระยะ 30 FT ทำดาเมจ 2d8 + STR Mod" },
+  // Lumira
+  "Wings": { icon: "🪽", image: "image\\Lumira\\Wings.png", desc: "Special - กางปีกออกเพิ่ม Speed + 30 FT , ลบความเเม่นยำสกิลลง -1d2" },
+  "Stellar Bonist": { icon: "🌟", image: "image\\Lumira\\download (88).jpg", desc: "Action - ใช้สมุนไพรเสริมพลังเพื่อนร่วมทีม" },
+  "Starry Sleep": { icon: "💤", image: "image\\Lumira\\(Top 10) LOL Best Items for Movement Speed.jpg", desc: "Action - ปล่อยละอองดาวทำให้ศัตรูหลับไหลศัตรูต้องทอย WIS Save 12" },
+  "Bless": { icon: "🙏", image: "image\\Lumira\\Ancient script.jpg", desc: "Action - ให้พร blessing แก่เพื่อนร่วมทีม + 1d2 Attack Roll 2 เทิร์น" },
+  // Feryx
+  "Spark of Hope": { icon: "🔥", image: "image\\Feryx\\Spark of Hope - Feryx.jpg", desc: "Action - มอบ Bardic Inspiration (d6) ให้เพื่อน 1 คน" },
+  "Charming Aria": { icon: "🎵", image: "image\\Feryx\\Untitled design (26).png", desc: "Action - ปล่อย Aura เสน์ห์ในระยะ 10 FT ศัตรูต้องทอย WIS Save 12 หาก Fail จะติด Charm 1 เทิร์น" },
+  "Resonance": { icon: "📯", image: "image\\Feryx\\Spark of Hope - Feryx.jpg", desc: "Action - สร้างคลื่นเสียงผลักศัตรูในระยะ 10 FT ทำดาเมจ 1d6 + Dex Mod" },
+  "Blood Spray": { icon: "🩸", image: "image\\Feryx\\Blood Art Style.png", desc: "Action - ปล่อยเวทเลือดทำดาเมจ 1d4 + Cha Mod * 2" },
+  "Dragon's Fang": { icon: "🐲", image: "image\\Feryx\\download (92).jpg", desc: "Action - ใช้เวทเลือดสร้างมังกรเเล้วปล่อยออกไปทำเมจ 1d4 + Cha Mod * 3 ระยะ 30 FT" },
+  // Gunter
+  "Guardian's Shadow": { icon: "👤", image: "image\\Gunter\\Untitled design (15).png", desc: "Action -Gunter พุ่งไปยืนบังหรือสร้างแรงกดดันรอบตัวเพื่อนที่เลือก ดาเมจ 100% ที่เพื่อนได้รับจะถูกโอนมาที่ Gunter แทน คงอยู่ 2 เทิร์น" },
+  "Last Provocation": { icon: "📣", image: "image\\Gunter\\2001.png", desc: "Action - ยั่วยุศัตรูในระยะ 30 FT ศัตรูต้องทอย WIS Save 12 หาก Fail จะต้องเล็ง Gunter 1 เทิร์น" },
+  "Stunning Fist": { icon: "👊", image: "image\\Gunter\\Untitled design (9).png", desc: "Action - ต่อยศัตรูอย่างหนักหน่วงทำดาเมจ 1d6 + STR Mod เเล้ว Stun ศัตรู" },
+  "Tidal Sweep": { icon: "🌊", image: "image\\Gunter\\Storm _ Vortex Tutorial.jpg", desc: "Action - ตวัดทวนรอบตัว 5 FT ทำดาเมจ 1d6 + STR Mod เเละ ผลักศัตรูทุกตัวที่อยู่ในระยะ" },
+  // Ren Ito
+  "Threaded Dagger": { icon: "🪡", image: "image\\Ren\\Witch Blade, dota 2 item, AI, 2k res Открыть веб-сайт.jpg", desc: "Action - ปามีดในระยะ 20 -> 60 FT ออกไปทำดาเมจ 1d6 + Dex Mod" },
+  "Binding Thread": { icon: "🕸", image: "image\\Ren\\H.jpg", desc: "Action - สร้างเส้นใยที่สามารถผูกศัตรูไว้ได้ศัตรูต้องทอย STR Save 12 หาก Fail จะติด Binding 1 เทิร์น" },
+  "Crimson Thread": { icon: "🧵", image: "image\\Ren\\download (63).jpg", desc: "Action - ใช้มีดกับด้ายดึงศัตรูเข้ามาใกล้ ศัตรูต้องทอย STR Save 10 หาก Fail จะติดโดนดึง" },
+  "Dancing Daggers": { icon: "🔪", image: "image\\Ren\\download (87).jpg", desc: "Action - ปามีดในระยะ 10 FT ทำดาเมจ 1d6 + Dex Mod * 3" },
+  // Abdulla
+  "Drunken Stance": { icon: "🍶", image: "image\\Abdulla\\3067.png", desc: "เมา." },
+  "Incendiary Body": { icon: "🔥", image: "image\\Abdulla\\Égide de Fogo Solar.jpg", desc: "เผาตัวเอง" },
+  "Abdulla's Molotov": { icon: "🍾", image: "image\\Abdulla\\download (72) (1).jpg", desc: "ปาขวด" },
+  "Heat Blast": { icon: "💥", image: "image\\Abdulla\\6660.png", desc: "พ่นไฟ" }
+};
+
+function getMeta(name) {
+  return SKILL_META[name] || { icon: "✦", image: "", desc: "" };
+}
+
+// ============ PORTRAIT / ICON HELPERS ============
+// สร้าง portrait ตัวละคร — ถ้ามี portraitImage ใช้รูป ถ้าไม่มีใช้ emoji
+function createPortraitEl(character, size) {
+  const el = document.createElement("div");
+  el.classList.add("char-portrait");
+  if (size) el.classList.add(size);
+  if (character.portraitImage) {
+    const img = document.createElement("img");
+    img.src = character.portraitImage;
+    img.alt = character.name;
+    img.classList.add("portrait-img");
+    el.appendChild(img);
+  } else {
+    el.textContent = character.portrait;
+  }
+  return el;
+}
+
+// สร้าง skill icon — ถ้ามี meta.image ใช้รูป ถ้าไม่มีใช้ emoji
+function createSkillIconEl(meta) {
+  const el = document.createElement("div");
+  el.classList.add("skill-icon");
+  if (meta.image) {
+    const img = document.createElement("img");
+    img.src = meta.image;
+    img.alt = "";
+    img.classList.add("skill-icon-img");
+    el.appendChild(img);
+  } else {
+    el.textContent = meta.icon;
+  }
+  return el;
+}
+
+// ============ STATE + LOCAL STORAGE ============
+const STORAGE_KEY = "cooldown-tracker-v1";
+let turnNumber = 1;
+
+function saveState() {
+  const payload = {
+    turnNumber,
+    chars: characters.map(c => ({
+      name: c.name,
+      skills: c.skills.map(s => ({
+        currentProgress: s.currentProgress,
+        active: s.active
+      }))
+    }))
+  };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch (e) {}
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (typeof data.turnNumber === "number") turnNumber = data.turnNumber;
+    if (Array.isArray(data.chars)) {
+      data.chars.forEach(savedChar => {
+        const c = characters.find(x => x.name === savedChar.name);
+        if (!c) return;
+        savedChar.skills.forEach((s, i) => {
+          if (!c.skills[i]) return;
+          if (typeof s.currentProgress === "number") c.skills[i].currentProgress = s.currentProgress;
+          if (typeof s.active === "boolean") c.skills[i].active = s.active;
+        });
+      });
+    }
+  } catch (e) {}
+}
+
+// ============ DOM REFS ============
+const characterButtons = document.getElementById("character-buttons");
+const characterSelect = document.getElementById("character-select");
+const gameScreen = document.getElementById("game-screen");
+const characterHeader = document.getElementById("character-header");
+const skillsContainer = document.getElementById("skills-container");
+const endTurnButton = document.getElementById("end-turn");
+const backButton = document.getElementById("back-button");
+const dmTurnNumberEl = document.getElementById("dm-turn-number");
+const dmModeButton = document.getElementById("dm-mode-button");
+const dmScreen = document.getElementById("dm-screen");
+const dmContainer = document.getElementById("dm-container");
+const dmBackButton = document.getElementById("dm-back-button");
+const dmEndTurnButton = document.getElementById("dm-end-turn");
+const dmResetTurnButton = document.getElementById("dm-reset-turn");
+
+let currentCharacter = null;
+
+// ============ HELPERS ============
+function isReady(skill) {
+  if (skill.maxCooldown === undefined) return false;
+  return skill.currentProgress >= skill.maxCooldown;
+}
+function isPassiveToggle(skill) {
+  return skill.canBeActive && skill.maxCooldown === undefined;
+}
+function updateDmTurnUi() {
+  if (dmTurnNumberEl) dmTurnNumberEl.textContent = turnNumber;
+}
+
+// ============ CHARACTER SELECT ============
+function createCharacterButtons() {
+  characters.forEach(character => {
+    const button = document.createElement("button");
+    button.classList.add("character-button");
+    button.style.setProperty("--char-color", character.color);
+
+    const portrait = createPortraitEl(character, "");
+
+    const info = document.createElement("div");
+    info.classList.add("char-info");
+    const cname = document.createElement("div");
+    cname.classList.add("char-name");
+    cname.textContent = character.name;
+    const cmeta = document.createElement("div");
+    cmeta.classList.add("char-meta");
+    cmeta.textContent = `${character.skills.length} skills`;
+    info.appendChild(cname);
+    info.appendChild(cmeta);
+
+    const arrow = document.createElement("div");
+    arrow.classList.add("char-arrow");
+    arrow.textContent = "→";
+
+    button.appendChild(portrait);
+    button.appendChild(info);
+    button.appendChild(arrow);
+
+    button.addEventListener("click", () => loadCharacter(character));
+    characterButtons.appendChild(button);
+  });
+}
+
+function loadCharacter(character) {
+  currentCharacter = character;
+  characterSelect.classList.add("hidden");
+  dmScreen.classList.add("hidden");
+  gameScreen.classList.remove("hidden");
+
+  characterHeader.innerHTML = "";
+  characterHeader.style.setProperty("--char-color", character.color);
+  const portrait = createPortraitEl(character, "large");
+  const name = document.createElement("h1");
+  name.id = "character-name";
+  name.textContent = character.name;
+  characterHeader.appendChild(portrait);
+  characterHeader.appendChild(name);
+
+  renderSkills();
+}
+
+// ============ RENDER SKILLS ============
+function renderSkills() {
+  skillsContainer.innerHTML = "";
+
+  currentCharacter.skills.forEach(skill => {
+    const ready = isReady(skill);
+    const meta = getMeta(skill.name);
+    const card = document.createElement("div");
+    card.classList.add("skill-card");
+    if (ready) card.classList.add("ready");
+    if (skill.canBeActive && skill.active) card.classList.add("is-active");
+
+    // Header: icon + name + READY badge + info tooltip
+    const header = document.createElement("div");
+    header.classList.add("skill-header");
+
+    const icon = createSkillIconEl(meta);
+    header.appendChild(icon);
+
+    const name = document.createElement("div");
+    name.classList.add("skill-name");
+    name.textContent = skill.name;
+    header.appendChild(name);
+
+    if (ready) {
+      const badge = document.createElement("div");
+      badge.classList.add("ready-badge");
+      badge.textContent = "READY";
+      header.appendChild(badge);
+    }
+
+    if (meta.desc) {
+      const info = document.createElement("div");
+      info.classList.add("skill-info");
+      info.textContent = "?";
+      info.tabIndex = 0;
+      const tip = document.createElement("div");
+      tip.classList.add("skill-tooltip");
+      tip.textContent = meta.desc;
+      info.appendChild(tip);
+      // tap-to-toggle for mobile
+      info.addEventListener("click", (e) => {
+        e.stopPropagation();
+        info.classList.toggle("open");
+      });
+      header.appendChild(info);
+    }
+
+    card.appendChild(header);
+
+    // Cooldown dots
+    if (skill.maxCooldown !== undefined) {
+      const dots = document.createElement("div");
+      dots.classList.add("dots");
+      for (let i = 0; i < skill.maxCooldown; i++) {
+        const dot = document.createElement("div");
+        dot.classList.add("dot");
+        if (i < skill.currentProgress) dot.classList.add("filled");
+        dots.appendChild(dot);
+      }
+      card.appendChild(dots);
+    }
+
+    // Active text
+    if (skill.canBeActive) {
+      const activeText = document.createElement("div");
+      activeText.classList.add("active-text");
+      if (skill.active) {
+        activeText.textContent = "● ACTIVE";
+        activeText.classList.add("on");
+      } else {
+        activeText.textContent = "○ NOT ACTIVE";
+      }
+      card.appendChild(activeText);
+    }
+
+    // Buttons row
+    const row = document.createElement("div");
+    row.classList.add("button-row");
+    let btnCount = 0;
+
+    if (skill.hitCooldown === undefined && skill.canUse !== false && skill.maxCooldown !== undefined) {
+      const useButton = document.createElement("button");
+      useButton.textContent = "USE";
+      useButton.classList.add("use-button");
+      useButton.disabled = !ready;
+      useButton.addEventListener("click", () => {
+        skill.currentProgress = 0;
+        saveState();
+        renderSkills();
+      });
+      row.appendChild(useButton);
+      btnCount++;
+    }
+
+    if (skill.hitCooldown !== undefined) {
+      const hitButton = document.createElement("button");
+      hitButton.textContent = "HIT";
+      hitButton.classList.add("use-button", "hit");
+      hitButton.disabled = !ready;
+      hitButton.addEventListener("click", () => {
+        skill.currentProgress = skill.maxCooldown - skill.hitCooldown;
+        saveState();
+        renderSkills();
+      });
+      row.appendChild(hitButton);
+
+      const missButton = document.createElement("button");
+      missButton.textContent = "MISS";
+      missButton.classList.add("use-button", "miss");
+      missButton.disabled = !ready;
+      missButton.addEventListener("click", () => {
+        skill.currentProgress = skill.maxCooldown - skill.missCooldown;
+        saveState();
+        renderSkills();
+      });
+      row.appendChild(missButton);
+      btnCount += 2;
+    }
+
+    if (skill.canReset) {
+      const resetButton = document.createElement("button");
+      resetButton.textContent = "RESET";
+      resetButton.classList.add("use-button", "reset");
+      resetButton.addEventListener("click", () => {
+        skill.currentProgress = skill.maxCooldown;
+        saveState();
+        renderSkills();
+      });
+      row.appendChild(resetButton);
+      btnCount++;
+    }
+
+    if (skill.canBeActive) {
+      const activeButton = document.createElement("button");
+      activeButton.textContent = skill.active ? "DEACTIVATE" : "ACTIVATE";
+      activeButton.classList.add("use-button", "toggle");
+      if (skill.active) activeButton.classList.add("on");
+      activeButton.addEventListener("click", () => {
+        skill.active = !skill.active;
+        saveState();
+        renderSkills();
+      });
+      row.appendChild(activeButton);
+      btnCount++;
+    }
+
+    if (btnCount === 2) row.classList.add("two");
+    else if (btnCount === 3) row.classList.add("three");
+    if (btnCount > 0) card.appendChild(row);
+
+    skillsContainer.appendChild(card);
+  });
+}
+
+// ============ END TURN ============
+function resetTurn() {
+  turnNumber = 1;
+  characters.forEach(c => {
+    c.skills.forEach(skill => {
+      if (skill.maxCooldown !== undefined) {
+        skill.currentProgress = skill.maxCooldown;
+      }
+    });
+  });
+  saveState();
+  updateDmTurnUi();
+}
+
+function advanceTurn() {
+  turnNumber++;
+  characters.forEach(c => {
+    c.skills.forEach(skill => {
+      if (skill.maxCooldown !== undefined && skill.currentProgress < skill.maxCooldown) {
+        skill.currentProgress++;
+      }
+    });
+  });
+  saveState();
+  updateDmTurnUi();
+}
+
+endTurnButton.addEventListener("click", () => {
+  advanceTurn();
+  renderSkills();
+});
+
+backButton.addEventListener("click", () => {
+  gameScreen.classList.add("hidden");
+  characterSelect.classList.remove("hidden");
+});
+
+// ============ DM OVERVIEW ============
+function renderDm() {
+  dmContainer.innerHTML = "";
+  characters.forEach(c => {
+    const wrap = document.createElement("div");
+    wrap.classList.add("dm-character");
+    wrap.style.setProperty("--char-color", c.color);
+
+    const head = document.createElement("div");
+    head.classList.add("dm-character-head");
+    const p = createPortraitEl(c, "small");
+    const h = document.createElement("h2");
+    h.textContent = c.name;
+    head.appendChild(p);
+    head.appendChild(h);
+    wrap.appendChild(head);
+
+    c.skills.forEach(s => {
+      const row = document.createElement("div");
+      row.classList.add("dm-skill-row");
+
+      const left = document.createElement("span");
+      left.classList.add("name");
+      const meta = getMeta(s.name);
+      left.textContent = `${meta.icon}  ${s.name}`;
+      row.appendChild(left);
+
+      const status = document.createElement("span");
+      status.classList.add("status");
+      if (isPassiveToggle(s)) {
+        if (s.active) {
+          status.textContent = "ACTIVE";
+          status.classList.add("active");
+        } else {
+          status.textContent = "NOT ACTIVE";
+          status.classList.add("inactive");
+        }
+      } else if (s.canBeActive && s.active) {
+        status.textContent = "ACTIVE";
+        status.classList.add("active");
+      } else if (s.maxCooldown === undefined) {
+        status.textContent = "—";
+      } else if (isReady(s)) {
+        status.textContent = "READY";
+        status.classList.add("ready");
+      } else {
+        status.textContent = `${s.currentProgress}/${s.maxCooldown}`;
+      }
+      row.appendChild(status);
+      wrap.appendChild(row);
+    });
+
+    dmContainer.appendChild(wrap);
+  });
+  updateDmTurnUi();
+}
+
+// ============ DM PIN ============
+const DM_PIN = "1234"; 
+let pinInput = "";
+
+const pinModal = document.getElementById("pin-modal");
+const pinDots = document.querySelectorAll(".pin-dot");
+const pinError = document.getElementById("pin-error");
+
+function openPinModal() {
+  pinInput = "";
+  updatePinDots();
+  pinError.classList.add("hidden");
+  pinModal.classList.remove("hidden");
+  pinModal.classList.add("visible");
+}
+
+function closePinModal() {
+  pinModal.classList.remove("visible");
+  setTimeout(() => pinModal.classList.add("hidden"), 200);
+  pinInput = "";
+  updatePinDots();
+  pinError.classList.add("hidden");
+}
+
+function updatePinDots() {
+  pinDots.forEach((dot, i) => {
+    dot.classList.toggle("filled", i < pinInput.length);
+    dot.classList.toggle("error", pinError && !pinError.classList.contains("hidden"));
+  });
+}
+
+function handlePinDigit(digit) {
+  if (pinInput.length >= DM_PIN.length) return;
+  pinError.classList.add("hidden");
+  pinDots.forEach(d => d.classList.remove("error"));
+  pinInput += digit;
+  updatePinDots();
+
+  if (pinInput.length === DM_PIN.length) {
+    setTimeout(() => {
+      if (pinInput === DM_PIN) {
+        closePinModal();
+        characterSelect.classList.add("hidden");
+        dmScreen.classList.remove("hidden");
+        renderDm();
+      } else {
+        pinError.classList.remove("hidden");
+        pinDots.forEach(d => d.classList.add("error"));
+        setTimeout(() => {
+          pinInput = "";
+          updatePinDots();
+          pinError.classList.add("hidden");
+          pinDots.forEach(d => d.classList.remove("error"));
+        }, 700);
+      }
+    }, 120);
+  }
+}
+
+document.querySelectorAll(".pin-key[data-digit]").forEach(btn => {
+  btn.addEventListener("click", () => handlePinDigit(btn.dataset.digit));
+});
+
+document.getElementById("pin-backspace").addEventListener("click", () => {
+  pinInput = pinInput.slice(0, -1);
+  pinError.classList.add("hidden");
+  pinDots.forEach(d => d.classList.remove("error"));
+  updatePinDots();
+});
+
+document.getElementById("pin-cancel").addEventListener("click", closePinModal);
+
+dmModeButton.addEventListener("click", openPinModal);
+
+dmBackButton.addEventListener("click", () => {
+  dmScreen.classList.add("hidden");
+  characterSelect.classList.remove("hidden");
+});
+
+dmEndTurnButton.addEventListener("click", () => {
+  advanceTurn();
+  renderDm();
+});
+
+dmResetTurnButton.addEventListener("click", () => {
+  if (confirm("Reset turn 1 และ cooldown ทุกสกิล?")) {
+    resetTurn();
+    renderDm();
+  }
+});
+
+// close any open tooltips on outside click
+document.addEventListener("click", () => {
+  document.querySelectorAll(".skill-info.open").forEach(el => el.classList.remove("open"));
+});
+
+// ============ START ============
+loadState();
+updateDmTurnUi();
+createCharacterButtons();
