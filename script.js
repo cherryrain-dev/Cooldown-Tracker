@@ -31,7 +31,7 @@ const characters = [
     skills: [
       { name: "Wings", active: false, canBeActive: true, canUse: false },
       { name: "Stellar Bonist", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false },
-      { name: "Starry Sleep", maxCooldown: 4, currentProgress: 4, hitCooldown: 1, missCooldown: 3 },
+      { name: "Starry Sleep", maxCooldown: 4, currentProgress: 4, hitCooldown: 3, missCooldown: 1 },
       { name: "Bless", maxCooldown: 3, currentProgress: 3 }
     ]
   },
