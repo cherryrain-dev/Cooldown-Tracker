@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Cooldown Tracker</title>
-  <link rel="icon" href="image\Silver\ada.jpg">
+  <link rel="icon" href="image/Silver/ada.jpg">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -41,6 +41,15 @@
       </div>
       <h1>DM Overview</h1>
       <div id="dm-container"></div>
+      
+      <div class="dm-log-section">
+        <div class="dm-log-header">
+          <div class="dm-log-title">📋 Activity Log</div>
+          <button id="dm-clear-log-btn" class="dm-log-clear-btn">🗑️ Clear Log</button>
+        </div>
+        <div id="dm-activity-log" class="dm-activity-log"></div>
+      </div>
+
       <div class="dm-button-row">
         <button id="dm-end-turn">END TURN</button>
         <button id="dm-reset-turn" class="dm-reset-btn">↺ RESET</button>
@@ -48,33 +57,33 @@
     </div>
 
     <div id="pin-modal" class="pin-overlay hidden">
-  <div class="pin-box">
-    <div class="pin-icon">🛡️</div>
-    <h2 class="pin-title">DM Access</h2>
-    <p class="pin-sub">Enter passcode to continue</p>
-    <div class="pin-dots" id="pin-dots">
-      <span class="pin-dot"></span>
-      <span class="pin-dot"></span>
-      <span class="pin-dot"></span>
-      <span class="pin-dot"></span>
+      <div class="pin-box">
+        <div class="pin-icon">🛡️</div>
+        <h2 class="pin-title">DM Access</h2>
+        <p class="pin-sub">Enter passcode to continue</p>
+        <div class="pin-dots" id="pin-dots">
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+        </div>
+        <p class="pin-error hidden" id="pin-error">Wrong passcode. Try again.</p>
+        <div class="pin-pad">
+          <button class="pin-key" data-digit="1">1</button>
+          <button class="pin-key" data-digit="2">2</button>
+          <button class="pin-key" data-digit="3">3</button>
+          <button class="pin-key" data-digit="4">4</button>
+          <button class="pin-key" data-digit="5">5</button>
+          <button class="pin-key" data-digit="6">6</button>
+          <button class="pin-key" data-digit="7">7</button>
+          <button class="pin-key" data-digit="8">8</button>
+          <button class="pin-key" data-digit="9">9</button>
+          <button class="pin-key pin-cancel" id="pin-cancel">✕</button>
+          <button class="pin-key" data-digit="0">0</button>
+          <button class="pin-key pin-back" id="pin-backspace">⌫</button>
+        </div>
+      </div>
     </div>
-    <p class="pin-error hidden" id="pin-error">Wrong passcode. Try again.</p>
-    <div class="pin-pad">
-      <button class="pin-key" data-digit="1">1</button>
-      <button class="pin-key" data-digit="2">2</button>
-      <button class="pin-key" data-digit="3">3</button>
-      <button class="pin-key" data-digit="4">4</button>
-      <button class="pin-key" data-digit="5">5</button>
-      <button class="pin-key" data-digit="6">6</button>
-      <button class="pin-key" data-digit="7">7</button>
-      <button class="pin-key" data-digit="8">8</button>
-      <button class="pin-key" data-digit="9">9</button>
-      <button class="pin-key pin-cancel" id="pin-cancel">✕</button>
-      <button class="pin-key" data-digit="0">0</button>
-      <button class="pin-key pin-back" id="pin-backspace">⌫</button>
-    </div>
-  </div>
-  </div>
 
   </div>
   
