@@ -2,7 +2,7 @@ const characters = [
   {
     name: "Silver",
     portrait: "⚔️",
-    portraitImage: "image\\Silver\\Silver.png", // ใส่ path รูปได้เลย เช่น "images/silver.png"
+    portraitImage: "image/Silver/Silver.png", 
     color: "#c9d4e8",
     skills: [
       { name: "Deflect", maxCooldown: 1, currentProgress: 1},
@@ -14,7 +14,7 @@ const characters = [
   {
     name: "Varrik",
     portrait: "🛡️",
-    portraitImage: "image\\Varrik\\Varrik.png", // ใส่ path รูปได้เลย เช่น "images/varrik.png"
+    portraitImage: "image/Varrik/Varrik.png", 
     color: "#d900ff",
     skills: [
       { name: "Battle-Hardened Body", maxCooldown: 4, currentProgress: 4, active: false, canBeActive: true, canUse: false },
@@ -27,14 +27,14 @@ const characters = [
   {
     name: "Lumira",
     portrait: "🌙",
-    portraitImage: "image\\Lumira\\Lumira.png",
+    portraitImage: "image/Lumira/Lumira.png",
     color: "#ffe100",
     mode: null, 
     modes: {
       angel: {
         label: "Angel",
         emoji: "",
-        portraitImage: "image\\Lumira\\Lumira.png",
+        portraitImage: "image/Lumira/Lumira.png",
         color: "#ffe100",
         skills: [
           { name: "Wings", active: false, canBeActive: true, canUse: false },
@@ -46,7 +46,7 @@ const characters = [
       devil: {
         label: "Devil",
         emoji: "🖤",
-        portraitImage: "image\\Lumira\\Lumira.png",
+        portraitImage: "image/Lumira/Lumira.png",
         color: "#ff4466",
         skills: [
           { name: "Devil Wings", active: false, canBeActive: true, canUse: false },
@@ -66,7 +66,7 @@ const characters = [
   {
     name: "Feryx",
     portrait: "🐉",
-    portraitImage: "image\\Feryx\\Feryx.png", // ใส่ path รูปได้เลย เช่น "images/feryx.png"
+    portraitImage: "image/Feryx/Feryx.png", 
     color: "#ff1100",
     skills: [
       { name: "Spark of Hope", maxCooldown: 3, currentProgress: 3 },
@@ -79,7 +79,7 @@ const characters = [
   {
     name: "Gunter",
     portrait: "🌊",
-    portraitImage: "image\\Gunter\\Gunter.png", // ใส่ path รูปได้เลย เช่น "images/gunter.png"
+    portraitImage: "image/Gunter/Gunter.png", 
     color: "#7ab8d4",
     skills: [
       { name: "Last Provocation", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: true },
@@ -91,7 +91,7 @@ const characters = [
   {
     name: "Ren Ito",
     portrait: "🗡️",
-    portraitImage: "image\\Ren\\Ren.png", // ใส่ path รูปได้เลย เช่น "images/ren.png"
+    portraitImage: "image/Ren/Ren.png", 
     color: "#e87aa8",
     skills: [
       { name: "Threaded Dagger", maxCooldown: 2, currentProgress: 2 },
@@ -103,7 +103,7 @@ const characters = [
   {
     name: "Abdulla",
     portrait: "🔥",
-    portraitImage: "image\\Abdulla\\Abdulla.png", // ใส่ path รูปได้เลย เช่น "images/abdulla.png"
+    portraitImage: "image/Abdulla/Abdulla.png", 
     color: "#ffac48",
     skills: [
       { name: "Drunken Stance", active: false, canBeActive: true, canUse: false },
@@ -114,52 +114,48 @@ const characters = [
   }
 ];
 
-// ============ SKILL METADATA (icons + descriptions + optional image) ============
-// image: ใส่ path รูปสกิลได้เลย เช่น "images/skills/deflect.png"
-// ถ้าไม่ใส่ image จะใช้ emoji icon แทนอัตโนมัติ
 const SKILL_META = {
   // Silver
-  "Deflect": { icon: "🛡", image: "image\\Silver\\Deflect.png", desc: "Reaction - ปัดป้องการโจมตีศัตรูหากสำเร็จสวนกลับด้วยดาเมจ 1d4 + STR Mod" },
-  "Holy Slash": { icon: "✨", image: "image\\Silver\\Holy Slash.png", desc: "Action - พุ่งทะลุผ่านศัตรูในระยะ 15 FT ทำดาเมจ 1d4 + STR Mod - Reset หากกำจัดศัตรูได้" },
-  "Rapid Strike": { icon: "⚡", image: "image\\Silver\\Rapid Strike.png", desc: "Action - ฟาดฟันศัตรูอย่างต่อเนื่องทำดาเมจ 1d6 + STR Mod * 3" },
-  "Hexround": { icon: "🔮", image: "image\\Silver\\Hunter Pistol.jpg", desc: "Action - ยิงกระสุนปืน 1 นัดทำดาเมจ 1d8 + Dex Mod" },
+  "Deflect": { icon: "🛡", image: "image/Silver/Deflect.png", desc: "Reaction - ปัดป้องการโจมตีศัตรูหากสำเร็จสวนกลับด้วยดาเมจ 1d4 + STR Mod" },
+  "Holy Slash": { icon: "✨", image: "image/Silver/Holy Slash.png", desc: "Action - พุ่งทะลุผ่านศัตรูในระยะ 15 FT ทำดาเมจ 1d4 + STR Mod - Reset หากกำจัดศัตรูได้" },
+  "Rapid Strike": { icon: "⚡", image: "image/Silver/Rapid Strike.png", desc: "Action - ฟาดฟันศัตรูอย่างต่อเนื่องทำดาเมจ 1d6 + STR Mod * 3" },
+  "Hexround": { icon: "🔮", image: "image/Silver/Hunter Pistol.jpg", desc: "Action - ยิงกระสุนปืน 1 นัดทำดาเมจ 1d8 + Dex Mod" },
   // Varrik
-  "Battle-Hardened Body": { icon: "💪", image: "image\\Varrik\\1220.png", desc: "Action - เพิ่มค่า AC 1d2 คงอยู่ 2 เทิร์น" },
-  "Fugitive's Instinct": { icon: "👣", image: "image\\Varrik\\1221.png", desc: "Bonus Action - เคลื่อนที่อย่างรวดเร็ว 15 FT" },
-  "Disarming Fang": { icon: "🦷", image: "image\\Varrik\\Untitled design (16).png", desc: "Action - พุ่งในระยะ 15 FT เข้าไปปัดอาวุธศัตรู ศัตรูต้องทอย STR Save 12" },
-  "Ashfall Slam": { icon: "🌋", image: "image\\Varrik\\Untitled design (18).png", desc: "Action - ทุ่มศัตรูลงพื้นทำดาเมจ 1d6 + STR Mod ศัตรูติดสถานะ Prone" },
-  "Rider Kick": { icon: "🦵", image: "image\\Varrik\\3175.png", desc: "Action - กระโดดขึ้นเเล้วพุ่งลงมาโจมตีศัตรูในระยะ 30 FT ทำดาเมจ 2d8 + STR Mod" },
+  "Battle-Hardened Body": { icon: "💪", image: "image/Varrik/1220.png", desc: "Action - เพิ่มค่า AC 1d2 คงอยู่ 2 เทิร์น" },
+  "Fugitive's Instinct": { icon: "👣", image: "image/Varrik/1221.png", desc: "Bonus Action - เคลื่อนที่อย่างรวดเร็ว 15 FT" },
+  "Disarming Fang": { icon: "🦷", image: "image/Varrik/Untitled design (16).png", desc: "Action - พุ่งในระยะ 15 FT เข้าไปปัดอาวุธศัตรู ศัตรูต้องทอย STR Save 12" },
+  "Ashfall Slam": { icon: "🌋", image: "image/Varrik/Untitled design (18).png", desc: "Action - ทุ่มศัตรูลงพื้นทำดาเมจ 1d6 + STR Mod ศัตรูติดสถานะ Prone" },
+  "Rider Kick": { icon: "🦵", image: "image/Varrik/3175.png", desc: "Action - กระโดดขึ้นเเล้วพุ่งลงมาโจมตีศัตรูในระยะ 30 FT ทำดาเมจ 2d8 + STR Mod" },
   // Lumira
-  "Wings": { icon: "🪽", image: "image\\Lumira\\Wings.png", desc: "Special - กางปีกออกเพิ่ม Speed + 30 FT , ลบความเเม่นยำสกิลลง -1d2" },
-  "Stellar Bonist": { icon: "🌟", image: "image\\Lumira\\download (88).jpg", desc: "Action - ใช้สมุนไพรเสริมพลังเพื่อนร่วมทีม" },
-  "Starry Sleep": { icon: "💤", image: "image\\Lumira\\(Top 10) LOL Best Items for Movement Speed.jpg", desc: "Action - ปล่อยละอองดาวทำให้ศัตรูหลับไหลศัตรูต้องทอย WIS Save 12" },
-  "Bless": { icon: "🙏", image: "image\\Lumira\\Ancient script.jpg", desc: "Action - ให้พร blessing แก่เพื่อนร่วมทีม + 1d2 Attack Roll 2 เทิร์น" },
-  "Devil Wings": { icon: "🖤", image: "image\\Lumira\\angel core but red ♡︎.jpg", desc: "Special - กางปีกปีศาจออกเพิ่มพลังโจมตี +1d2 , ลด AC ลง -1d2" },
-  "Judgment Cut": { icon: "⚖️", image: "image\\Lumira\\download (93).jpg", desc: "Action - ฟันทุกคนในระยะ 30 FT ทำดาเมจ 1d6 + WIS Mod * 3" },
-  "Blood Missile": { icon: "🩸", image: "image\\Lumira\\Untitled design (21).png", desc: "Action - ยิงกระสุนเลือดในระยะ 30 FT ทำดาเมจ 1d4 * 3 + Wis Mod" },
-  "Ray": { icon: "🔫", image: "image\\Lumira\\download (90).jpg", desc: "Action - ยิงลำเเสงใส่ศัตรูดูดเลือดจากความเสียหายที่ทำได้ครึ่งนึง 1d6 + Wis Mod" },
-
+  "Wings": { icon: "🪽", image: "image/Lumira/Wings.png", desc: "Special - กางปีกออกเพิ่ม Speed + 30 FT , ลบความเเม่นยำสกิลลง -1d2" },
+  "Stellar Bonist": { icon: "🌟", image: "image/Lumira/download (88).jpg", desc: "Action - ใช้สมุนไพรเสริมพลังเพื่อนร่วมทีม" },
+  "Starry Sleep": { icon: "💤", image: "image/Lumira/(Top 10) LOL Best Items for Movement Speed.jpg", desc: "Action - ปล่อยละอองดาวทำให้ศัตรูหลับไหลศัตรูต้องทอย WIS Save 12" },
+  "Bless": { icon: "🙏", image: "image/Lumira/Ancient script.jpg", desc: "Action - ให้พร blessing แก่เพื่อนร่วมทีม + 1d2 Attack Roll 2 เทิร์น" },
+  "Devil Wings": { icon: "🖤", image: "image/Lumira/angel core but red ♡︎.jpg", desc: "Special - กางปีกปีศาจออกเพิ่มพลังโจมตี +1d2 , ลด AC ลง -1d2" },
+  "Judgment Cut": { icon: "⚖️", image: "image/Lumira/download (93).jpg", desc: "Action - ฟันทุกคนในระยะ 30 FT ทำดาเมจ 1d6 + WIS Mod * 3" },
+  "Blood Missile": { icon: "🩸", image: "image/Lumira/Untitled design (21).png", desc: "Action - ยิงกระสุนเลือดในระยะ 30 FT ทำดาเมจ 1d4 * 3 + Wis Mod" },
+  "Ray": { icon: "🔫", image: "image/Lumira/download (90).jpg", desc: "Action - ยิงลำเเสงใส่ศัตรูดูดเลือดจากความเสียหายที่ทำได้ครึ่งนึง 1d6 + Wis Mod" },
   // Feryx
-  "Spark of Hope": { icon: "🔥", image: "image\\Feryx\\Spark of Hope - Feryx.jpg", desc: "Action - มอบ Bardic Inspiration (d6) ให้เพื่อน 1 คน" },
-  "Charming Aria": { icon: "🎵", image: "image\\Feryx\\Untitled design (26).png", desc: "Action - ปล่อย Aura เสน์ห์ในระยะ 10 FT ศัตรูต้องทอย WIS Save 12 หาก Fail จะติด Charm 1 เทิร์น" },
-  "Resonance": { icon: "📯", image: "image\\Feryx\\Spark of Hope - Feryx.jpg", desc: "Action - สร้างคลื่นเสียงผลักศัตรูในระยะ 10 FT ทำดาเมจ 1d6 + Dex Mod" },
-  "Blood Spray": { icon: "🩸", image: "image\\Feryx\\Blood Art Style.png", desc: "Action - ปล่อยเวทเลือดทำดาเมจ 1d4 + Cha Mod * 2" },
-  "Dragon's Fang": { icon: "🐲", image: "image\\Feryx\\download (92).jpg", desc: "Action - ใช้เวทเลือดสร้างมังกรเเล้วปล่อยออกไปทำเมจ 1d4 + Cha Mod * 3 ระยะ 30 FT" },
+  "Spark of Hope": { icon: "🔥", image: "image/Feryx/Spark of Hope - Feryx.jpg", desc: "Action - มอบ Bardic Inspiration (d6) ให้เพื่อน 1 คน" },
+  "Charming Aria": { icon: "🎵", image: "image/Feryx/Untitled design (26).png", desc: "Action - ปล่อย Aura เสน์ห์ในระยะ 10 FT ศัตรูต้องทอย WIS Save 12 หาก Fail จะติด Charm 1 เทิร์น" },
+  "Resonance": { icon: "📯", image: "image/Feryx/Spark of Hope - Feryx.jpg", desc: "Action - สร้างคลื่นเสียงผลักศัตรูในระยะ 10 FT ทำดาเมจ 1d6 + Dex Mod" },
+  "Blood Spray": { icon: "🩸", image: "image/Feryx/Blood Art Style.png", desc: "Action - ปล่อยเวทเลือดทำดาเมจ 1d4 + Cha Mod * 2" },
+  "Dragon's Fang": { icon: "🐲", image: "image/Feryx/download (92).jpg", desc: "Action - ใช้เวทเลือดสร้างมังกรเเล้วปล่อยออกไปทำเมจ 1d4 + Cha Mod * 3 ระยะ 30 FT" },
   // Gunter
-  "Guardian's Shadow": { icon: "👤", image: "image\\Gunter\\Untitled design (15).png", desc: "Action -Gunter พุ่งไปยืนบังหรือสร้างแรงกดดันรอบตัวเพื่อนที่เลือก ดาเมจ 100% ที่เพื่อนได้รับจะถูกโอนมาที่ Gunter แทน คงอยู่ 2 เทิร์น" },
-  "Last Provocation": { icon: "📣", image: "image\\Gunter\\2001.png", desc: "Action - ยั่วยุศัตรูในระยะ 30 FT ศัตรูต้องทอย WIS Save 12 หาก Fail จะต้องเล็ง Gunter 1 เทิร์น" },
-  "Stunning Fist": { icon: "👊", image: "image\\Gunter\\Untitled design (9).png", desc: "Action - ต่อยศัตรูอย่างหนักหน่วงทำดาเมจ 1d6 + STR Mod เเล้ว Stun ศัตรู" },
-  "Tidal Sweep": { icon: "🌊", image: "image\\Gunter\\Storm _ Vortex Tutorial.jpg", desc: "Action - ตวัดทวนรอบตัว 5 FT ทำดาเมจ 1d6 + STR Mod เเละ ผลักศัตรูทุกตัวที่อยู่ในระยะ" },
+  "Guardian's Shadow": { icon: "👤", image: "image/Gunter/Untitled design (15).png", desc: "Action -Gunter พุ่งไปยืนบังหรือสร้างแรงกดดันรอบตัวเพื่อนที่เลือก ดาเมจ 100% ที่เพื่อนได้รับจะถูกโอนมาที่ Gunter แทน คงอยู่ 2 เทิร์น" },
+  "Last Provocation": { icon: "📣", image: "image/Gunter/2001.png", desc: "Action - ยั่วยุศัตรูในระยะ 30 FT ศัตรูต้องทอย WIS Save 12 หาก Fail จะต้องเล็ง Gunter 1 เทิร์น" },
+  "Stunning Fist": { icon: "👊", image: "image/Gunter/Untitled design (9).png", desc: "Action - ต่อยศัตรูอย่างหนักหน่วงทำดาเมจ 1d6 + STR Mod เเล้ว Stun ศัตรู" },
+  "Tidal Sweep": { icon: "🌊", image: "image/Gunter/Storm _ Vortex Tutorial.jpg", desc: "Action - ตวัดทวนรอบตัว 5 FT ทำดาเมจ 1d6 + STR Mod เเละ ผลักศัตรูทุกตัวที่อยู่ในระยะ" },
   // Ren Ito
-  "Threaded Dagger": { icon: "🪡", image: "image\\Ren\\Witch Blade, dota 2 item, AI, 2k res Открыть веб-сайт.jpg", desc: "Action - ปามีดในระยะ 20 -> 60 FT ออกไปทำดาเมจ 1d6 + Dex Mod" },
-  "Binding Thread": { icon: "🕸", image: "image\\Ren\\H.jpg", desc: "Action - สร้างเส้นใยที่สามารถผูกศัตรูไว้ได้ศัตรูต้องทอย STR Save 12 หาก Fail จะติด Binding 1 เทิร์น" },
-  "Crimson Thread": { icon: "🧵", image: "image\\Ren\\download (63).jpg", desc: "Action - ใช้มีดกับด้ายดึงศัตรูเข้ามาใกล้ ศัตรูต้องทอย STR Save 10 หาก Fail จะติดโดนดึง" },
-  "Dancing Daggers": { icon: "🔪", image: "image\\Ren\\download (87).jpg", desc: "Action - ปามีดในระยะ 10 FT ทำดาเมจ 1d6 + Dex Mod * 3" },
+  "Threaded Dagger": { icon: "🪡", image: "image/Ren/Witch Blade, dota 2 item, AI, 2k res Открыть веб-сайт.jpg", desc: "Action - ปามีดในระยะ 20 -> 60 FT ออกไปทำดาเมจ 1d6 + Dex Mod" },
+  "Binding Thread": { icon: "🕸", image: "image/Ren/H.jpg", desc: "Action - สร้างเส้นใยที่สามารถผูกศัตรูไว้ได้ศัตรูต้องทอย STR Save 12 หาก Fail จะติด Binding 1 เทิร์น" },
+  "Crimson Thread": { icon: "🧵", image: "image/Ren/download (63).jpg", desc: "Action - ใช้มีดกับด้ายดึงศัตรูเข้ามาใกล้ ศัตรูต้องทอย STR Save 10 หาก Fail จะติดโดนดึง" },
+  "Dancing Daggers": { icon: "🔪", image: "image/Ren/download (87).jpg", desc: "Action - ปามีดในระยะ 10 FT ทำดาเมจ 1d6 + Dex Mod * 3" },
   // Abdulla
-  "Drunken Stance": { icon: "🍶", image: "image\\Abdulla\\3067.png", desc: "เมา." },
-  "Incendiary Body": { icon: "🔥", image: "image\\Abdulla\\Égide de Fogo Solar.jpg", desc: "เผาตัวเอง" },
-  "Abdulla's Molotov": { icon: "🍾", image: "image\\Abdulla\\download (72) (1).jpg", desc: "ปาขวด" },
-  "Heat Blast": { icon: "💥", image: "image\\Abdulla\\6660.png", desc: "พ่นไฟ" }
+  "Drunken Stance": { icon: "🍶", image: "image/Abdulla/3067.png", desc: "เมา." },
+  "Incendiary Body": { icon: "🔥", image: "image/Abdulla/Égide de Fogo Solar.jpg", desc: "เผาตัวเอง" },
+  "Abdulla's Molotov": { icon: "🍾", image: "image/Abdulla/download (72) (1).jpg", desc: "ปาขวด" },
+  "Heat Blast": { icon: "💥", image: "image/Abdulla/6660.png", desc: "พ่นไฟ" }
 };
 
 function getMeta(name) {
@@ -167,7 +163,6 @@ function getMeta(name) {
 }
 
 // ============ PORTRAIT / ICON HELPERS ============
-// สร้าง portrait ตัวละคร — ถ้ามี portraitImage ใช้รูป ถ้าไม่มีใช้ emoji
 function createPortraitEl(character, size) {
   const el = document.createElement("div");
   el.classList.add("char-portrait");
@@ -184,7 +179,6 @@ function createPortraitEl(character, size) {
   return el;
 }
 
-// สร้าง skill icon — ถ้ามี meta.image ใช้รูป ถ้าไม่มีใช้ emoji
 function createSkillIconEl(meta) {
   const el = document.createElement("div");
   el.classList.add("skill-icon");
@@ -201,7 +195,7 @@ function createSkillIconEl(meta) {
 }
 
 // ============ ACTIVITY LOG ============
-const activityLog = []; // { charName, skillName, action, time }
+const activityLog = []; 
 const MAX_LOG = 30;
 
 function logAction(charName, skillName, action) {
@@ -235,7 +229,6 @@ function formatTimeAgo(ts) {
   return Math.floor(s / 60) + "m ago";
 }
 
-// อัปเดต time ago ทุก 10 วิ
 setInterval(() => { if (activityLog.length) renderActivityLog(); }, 10000);
 
 // ============ STATE + FIREBASE ============
@@ -243,10 +236,9 @@ const firebaseConfig = {
   databaseURL: "https://dnd---cooldown-tracker-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
-// เริ่มต้นเปิดใช้งาน Firebase
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
-const ROOM_ID = "dnd-session-1"; // ชื่อห้อง (ถ้าเล่นหลายปาร์ตี้ ค่อยมาแก้ตรงนี้ได้)
+const ROOM_ID = "dnd-session-1"; 
 
 let turnNumber = 1;
 
@@ -265,20 +257,18 @@ function saveState() {
     }))
   };
 
-  // ท่าไม้ตาย: แปลงเป็นข้อความแล้วแปลงกลับ เพื่อล้างค่า undefined ทิ้งให้หมด 100%
+  // แก้บั๊ก Firebase undefined
   const cleanPayload = JSON.parse(JSON.stringify(payload));
   
-  // ส่งขึ้น Firebase ทันทีที่มีการกด
   database.ref('rooms/' + ROOM_ID).set(cleanPayload).catch(err => {
     console.error("Firebase Sync Error: ", err);
   });
 }
 
 function loadState() {
-  // .on('value') คือการ "ดักฟัง" ถ้ามีใครกดปุ่ม ข้อมูลจะเปลี่ยน แล้วมันจะอัปเดตหน้าจอทันที
   database.ref('rooms/' + ROOM_ID).on('value', (snapshot) => {
     const data = snapshot.val();
-    if (!data) return; // ถ้าเพิ่งสร้างห้องยังไม่มีข้อมูล ให้ข้ามไปก่อน
+    if (!data) return; 
 
     if (typeof data.turnNumber === "number") turnNumber = data.turnNumber;
 
@@ -287,7 +277,6 @@ function loadState() {
         const c = characters.find(x => x.name === savedChar.name);
         if (!c) return;
 
-        // จัดการโหมดของ Lumira
         if (savedChar.mode && c.modes) {
           c.mode = savedChar.mode;
           const modeData = c.modes[savedChar.mode];
@@ -297,7 +286,6 @@ function loadState() {
           }
         }
 
-        // จัดการสกิล
         savedChar.skills.forEach((s, i) => {
           if (!c.skills[i]) return;
           if (typeof s.currentProgress === "number") c.skills[i].currentProgress = s.currentProgress;
@@ -307,29 +295,25 @@ function loadState() {
       });
     }
 
-    // จัดการ Activity Log
     if (Array.isArray(data.activityLog)) {
       activityLog.length = 0;
       data.activityLog.forEach(log => activityLog.push(log));
-      renderActivityLog();
     } else {
       activityLog.length = 0;
-      renderActivityLog();
     }
+    renderActivityLog();
 
-    // สั่งวาด UI ใหม่
     updateDmTurnUi();
     
-    // ถ้าหน้าจอ DM ไม่ได้ถูกซ่อนอยู่ ให้รีเฟรชหน้า DM
     if (!dmScreen.classList.contains("hidden")) {
       renderDm();
-    } 
-    // ถ้าหน้าจอกดสกิลไม่ได้ถูกซ่อนอยู่ ให้รีเฟรชปุ่มสกิล
-    else if (!gameScreen.classList.contains("hidden")) {
+    } else if (!gameScreen.classList.contains("hidden")) {
+      renderHeader(); // อัปเดตสี Lumira
       renderSkills();
     }
   });
 }
+
 // ============ DOM REFS ============
 const characterButtons = document.getElementById("character-buttons");
 const characterSelect = document.getElementById("character-select");
@@ -345,6 +329,7 @@ const dmContainer = document.getElementById("dm-container");
 const dmBackButton = document.getElementById("dm-back-button");
 const dmEndTurnButton = document.getElementById("dm-end-turn");
 const dmResetTurnButton = document.getElementById("dm-reset-turn");
+const dmClearLogButton = document.getElementById("dm-clear-log-btn"); // ปุ่มใหม่
 
 let currentCharacter = null;
 
@@ -393,8 +378,31 @@ function createCharacterButtons() {
   });
 }
 
+function renderHeader() {
+  if (!currentCharacter) return;
+  characterHeader.innerHTML = "";
+  characterHeader.style.setProperty("--char-color", currentCharacter.color);
+  
+  const portrait = createPortraitEl(currentCharacter, "large");
+  const name = document.createElement("h1");
+  name.id = "character-name";
+  name.textContent = currentCharacter.name;
+
+  characterHeader.appendChild(portrait);
+  characterHeader.appendChild(name);
+
+  if (currentCharacter.mode && currentCharacter.modes) {
+    const modeBadge = document.createElement("div");
+    modeBadge.classList.add("mode-badge");
+    const modeData = currentCharacter.modes[currentCharacter.mode];
+    modeBadge.textContent = modeData.emoji + " " + modeData.label;
+    modeBadge.style.color = modeData.color;
+    modeBadge.style.borderColor = modeData.color;
+    characterHeader.appendChild(modeBadge);
+  }
+}
+
 function loadCharacter(character) {
-  // Lumira ต้องเลือกโหมดก่อน
   if (character.modes && !character.mode) {
     showModeSelect(character);
     return;
@@ -404,27 +412,7 @@ function loadCharacter(character) {
   dmScreen.classList.add("hidden");
   gameScreen.classList.remove("hidden");
 
-  characterHeader.innerHTML = "";
-  characterHeader.style.setProperty("--char-color", character.color);
-  const portrait = createPortraitEl(character, "large");
-  const name = document.createElement("h1");
-  name.id = "character-name";
-  name.textContent = character.name;
-  // ถ้ามี mode ให้แสดง badge
-  if (character.mode) {
-    const modeBadge = document.createElement("div");
-    modeBadge.classList.add("mode-badge");
-    const modeData = character.modes[character.mode];
-    modeBadge.textContent = modeData.emoji + " " + modeData.label;
-    modeBadge.style.color = modeData.color;
-    characterHeader.appendChild(portrait);
-    characterHeader.appendChild(name);
-    characterHeader.appendChild(modeBadge);
-  } else {
-    characterHeader.appendChild(portrait);
-    characterHeader.appendChild(name);
-  }
-
+  renderHeader();
   renderSkills();
 }
 
@@ -444,7 +432,6 @@ function showModeSelect(character) {
     btn.classList.add("mode-option-btn");
     btn.style.setProperty("--mode-color", modeData.color);
 
-    // ใช้รูป portrait หลักของตัวละคร ไม่เปลี่ยนตาม mode
     const portrait = createPortraitEl(character, "large");
 
     const label = document.createElement("div");
@@ -455,14 +442,13 @@ function showModeSelect(character) {
     btn.appendChild(label);
 
     btn.addEventListener("click", () => {
-      // เซ็ต mode และ copy skills จาก mode ที่เลือก
       character.mode = key;
       character.color = modeData.color;
       if (modeData.portraitImage) character.portraitImage = modeData.portraitImage;
-      // reset skills จาก mode template
       character.skills = JSON.parse(JSON.stringify(modeData.skills));
       modeScreen.classList.add("hidden");
       loadCharacter(character);
+      saveState(); // อัปเดตโหมดขึ้น Firebase
     });
 
     modeButtons.appendChild(btn);
@@ -488,7 +474,6 @@ function renderSkills() {
     if (ready) card.classList.add("ready");
     if (skill.canBeActive && skill.active) card.classList.add("is-active");
 
-    // Header: icon + name + READY badge + info tooltip
     const header = document.createElement("div");
     header.classList.add("skill-header");
 
@@ -516,7 +501,6 @@ function renderSkills() {
       tip.classList.add("skill-tooltip");
       tip.textContent = meta.desc;
       info.appendChild(tip);
-      // tap-to-toggle for mobile
       info.addEventListener("click", (e) => {
         e.stopPropagation();
         info.classList.toggle("open");
@@ -526,7 +510,6 @@ function renderSkills() {
 
     card.appendChild(header);
 
-    // Cooldown dots
     if (skill.maxCooldown !== undefined) {
       const dots = document.createElement("div");
       dots.classList.add("dots");
@@ -539,7 +522,6 @@ function renderSkills() {
       card.appendChild(dots);
     }
 
-    // Bullet dots (กระสุน — กดทีละ 1)
     if (skill.isBullet) {
       const dots = document.createElement("div");
       dots.classList.add("dots", "bullet-dots");
@@ -552,7 +534,6 @@ function renderSkills() {
       card.appendChild(dots);
     }
 
-    // Active text
     if (skill.canBeActive) {
       const activeText = document.createElement("div");
       activeText.classList.add("active-text");
@@ -565,7 +546,6 @@ function renderSkills() {
       card.appendChild(activeText);
     }
 
-    // Buttons row
     const row = document.createElement("div");
     row.classList.add("button-row");
     let btnCount = 0;
@@ -580,7 +560,6 @@ function renderSkills() {
           skill.bulletsLeft--;
           logAction(currentCharacter.name, skill.name, "FIRE");
           saveState();
-          renderSkills();
         }
       });
       row.appendChild(fireBtn);
@@ -592,7 +571,6 @@ function renderSkills() {
       reloadBtn.addEventListener("click", () => {
         skill.bulletsLeft = skill.maxBullets;
         saveState();
-        renderSkills();
       });
       row.appendChild(reloadBtn);
       btnCount += 2;
@@ -607,7 +585,6 @@ function renderSkills() {
         skill.currentProgress = 0;
         logAction(currentCharacter.name, skill.name, "USE");
         saveState();
-        renderSkills();
       });
       row.appendChild(useButton);
       btnCount++;
@@ -622,7 +599,6 @@ function renderSkills() {
         skill.currentProgress = skill.maxCooldown - skill.hitCooldown;
         logAction(currentCharacter.name, skill.name, "HIT");
         saveState();
-        renderSkills();
       });
       row.appendChild(hitButton);
 
@@ -634,7 +610,6 @@ function renderSkills() {
         skill.currentProgress = skill.maxCooldown - skill.missCooldown;
         logAction(currentCharacter.name, skill.name, "MISS");
         saveState();
-        renderSkills();
       });
       row.appendChild(missButton);
       btnCount += 2;
@@ -647,7 +622,6 @@ function renderSkills() {
       resetButton.addEventListener("click", () => {
         skill.currentProgress = skill.maxCooldown;
         saveState();
-        renderSkills();
       });
       row.appendChild(resetButton);
       btnCount++;
@@ -662,7 +636,6 @@ function renderSkills() {
         skill.active = !skill.active;
         logAction(currentCharacter.name, skill.name, skill.active ? "ACTIVATE" : "DEACTIVATE");
         saveState();
-        renderSkills();
       });
       row.appendChild(activeButton);
       btnCount++;
@@ -676,7 +649,7 @@ function renderSkills() {
   });
 }
 
-// ============ END TURN ============
+// ============ END TURN & RESET ============
 function resetTurn() {
   turnNumber = 1;
   characters.forEach(c => {
@@ -687,7 +660,6 @@ function resetTurn() {
     });
   });
   saveState();
-  updateDmTurnUi();
 }
 
 function advanceTurn() {
@@ -700,20 +672,17 @@ function advanceTurn() {
     });
   });
   saveState();
-  updateDmTurnUi();
 }
 
 endTurnButton.addEventListener("click", () => {
   advanceTurn();
-  renderSkills();
 });
 
 backButton.addEventListener("click", () => {
-  // ถ้าเป็น Lumira ให้ reset mode เพื่อให้เลือกใหม่ได้
   if (currentCharacter && currentCharacter.modes) {
     currentCharacter.mode = null;
     currentCharacter.color = "#ffe100";
-    currentCharacter.portraitImage = "image\\Lumira\\Lumira.png";
+    currentCharacter.portraitImage = "image/Lumira/Lumira.png";
   }
   gameScreen.classList.add("hidden");
   characterSelect.classList.remove("hidden");
@@ -740,7 +709,6 @@ function renderDm() {
       const row = document.createElement("div");
       row.classList.add("dm-skill-row");
 
-      // ซ้าย: icon + ชื่อ + tooltip
       const left = document.createElement("span");
       left.classList.add("name");
 
@@ -754,7 +722,6 @@ function renderDm() {
       nameSpan.textContent = s.name;
       left.appendChild(nameSpan);
 
-      // tooltip เหมือนผู้เล่น
       if (meta.desc) {
         const infoBtn = document.createElement("div");
         infoBtn.classList.add("skill-info", "dm-skill-info");
@@ -804,22 +771,17 @@ function renderDm() {
 
     dmContainer.appendChild(wrap);
   });
-  // Activity log panel
-  const logSection = document.createElement("div");
-  logSection.classList.add("dm-log-section");
-  const logTitle = document.createElement("div");
-  logTitle.classList.add("dm-log-title");
-  logTitle.textContent = "📋 Activity Log";
-  const logEntries = document.createElement("div");
-  logEntries.id = "dm-activity-log";
-  logEntries.classList.add("dm-activity-log");
-  logSection.appendChild(logTitle);
-  logSection.appendChild(logEntries);
-  dmContainer.appendChild(logSection);
 
   updateDmTurnUi();
-  renderActivityLog();
 }
+
+// ฟังก์ชันลบ Log
+dmClearLogButton.addEventListener("click", () => {
+  if (confirm("คุณต้องการล้างประวัติ Activity Log ทั้งหมดใช่หรือไม่?")) {
+    activityLog.length = 0;
+    saveState(); // ส่งข้อมูลเปล่าขึ้น Firebase
+  }
+});
 
 // ============ DM PIN ============
 const DM_PIN = "1234"; 
@@ -900,19 +862,14 @@ dmBackButton.addEventListener("click", () => {
   characterSelect.classList.remove("hidden");
 });
 
-dmEndTurnButton.addEventListener("click", () => {
-  advanceTurn();
-  renderDm();
-});
+dmEndTurnButton.addEventListener("click", advanceTurn);
 
 dmResetTurnButton.addEventListener("click", () => {
   if (confirm("Reset turn 1 และ cooldown ทุกสกิล?")) {
     resetTurn();
-    renderDm();
   }
 });
 
-// close any open tooltips on outside click
 document.addEventListener("click", () => {
   document.querySelectorAll(".skill-info.open").forEach(el => el.classList.remove("open"));
 });
