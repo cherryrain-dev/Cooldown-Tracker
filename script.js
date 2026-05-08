@@ -253,22 +253,23 @@ let turnNumber = 1;
 function saveState() {
   const payload = {
     turnNumber: turnNumber,
-    // ถ้า activityLog ไม่มีข้อมูล ให้ส่ง null (Firebase ไม่รับ Array ว่าง)
-    activityLog: activityLog.length > 0 ? activityLog : null, 
+    activityLog: activityLog.length > 0 ? activityLog : null,
     chars: characters.map(c => ({
       name: c.name,
       mode: c.mode || null,
       skills: c.skills.map(s => ({
-        // ป้องกัน Error: ดักค่า undefined ให้กลายเป็น null
-        currentProgress: s.currentProgress !== undefined ? s.currentProgress : null,
-        active: s.active !== undefined ? s.active : null,
-        bulletsLeft: s.bulletsLeft !== undefined ? s.bulletsLeft : null
+        currentProgress: s.currentProgress,
+        active: s.active,
+        bulletsLeft: s.bulletsLeft
       }))
     }))
   };
+
+  // ท่าไม้ตาย: แปลงเป็นข้อความแล้วแปลงกลับ เพื่อล้างค่า undefined ทิ้งให้หมด 100%
+  const cleanPayload = JSON.parse(JSON.stringify(payload));
   
   // ส่งขึ้น Firebase ทันทีที่มีการกด
-  database.ref('rooms/' + ROOM_ID).set(payload).catch(err => {
+  database.ref('rooms/' + ROOM_ID).set(cleanPayload).catch(err => {
     console.error("Firebase Sync Error: ", err);
   });
 }
