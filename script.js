@@ -7,7 +7,8 @@ const characters = [
     skills: [
       { name: "Deflect", maxCooldown: 1, currentProgress: 1},
       { name: "Holy Slash", maxCooldown: 3, currentProgress: 3, canReset: true, active: false, canBeActive: false },
-      { name: "Rapid Strike", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false }
+      { name: "Rapid Strike", maxCooldown: 3, currentProgress: 3},
+      { name: "Hexround", maxBullets: 4, bulletsLeft: 4, isBullet: true }
     ]
   },
   {
@@ -26,12 +27,39 @@ const characters = [
   {
     name: "Lumira",
     portrait: "🌙",
-    portraitImage: "image\\Lumira\\Lumira.png", // ใส่ path รูปได้เลย เช่น "images/lumira.png"
+    portraitImage: "image\\Lumira\\Lumira.png",
     color: "#ffe100",
+    mode: null, 
+    modes: {
+      angel: {
+        label: "Angel",
+        emoji: "",
+        portraitImage: "image\\Lumira\\Lumira.png",
+        color: "#ffe100",
+        skills: [
+          { name: "Wings", active: false, canBeActive: true, canUse: false },
+          { name: "Stellar Bonist", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false },
+          { name: "Starry Sleep", maxCooldown: 4, currentProgress: 4, hitCooldown: 1, missCooldown: 3 },
+          { name: "Bless", maxCooldown: 3, currentProgress: 3 }
+        ]
+      },
+      devil: {
+        label: "Devil",
+        emoji: "🖤",
+        portraitImage: "image\\Lumira\\Lumira.png",
+        color: "#ff4466",
+        skills: [
+          { name: "Devil Wings", active: false, canBeActive: true, canUse: false },
+          { name: "Judgment Cut", maxCooldown: 1, currentProgress: 1},
+          { name: "Blood Missile", maxCooldown: 2, currentProgress: 2},
+          { name: "Ray", maxCooldown: 3, currentProgress: 3 }
+        ]
+      }
+    },
     skills: [
       { name: "Wings", active: false, canBeActive: true, canUse: false },
       { name: "Stellar Bonist", maxCooldown: 3, currentProgress: 3, active: false, canBeActive: false },
-      { name: "Starry Sleep", maxCooldown: 4, currentProgress: 4, hitCooldown: 3, missCooldown: 1 },
+      { name: "Starry Sleep", maxCooldown: 4, currentProgress: 4, hitCooldown: 1, missCooldown: 3 },
       { name: "Bless", maxCooldown: 3, currentProgress: 3 }
     ]
   },
@@ -94,6 +122,7 @@ const SKILL_META = {
   "Deflect": { icon: "🛡", image: "image\\Silver\\Deflect.png", desc: "Reaction - ปัดป้องการโจมตีศัตรูหากสำเร็จสวนกลับด้วยดาเมจ 1d4 + STR Mod" },
   "Holy Slash": { icon: "✨", image: "image\\Silver\\Holy Slash.png", desc: "Action - พุ่งทะลุผ่านศัตรูในระยะ 15 FT ทำดาเมจ 1d4 + STR Mod - Reset หากกำจัดศัตรูได้" },
   "Rapid Strike": { icon: "⚡", image: "image\\Silver\\Rapid Strike.png", desc: "Action - ฟาดฟันศัตรูอย่างต่อเนื่องทำดาเมจ 1d6 + STR Mod * 3" },
+  "Hexround": { icon: "🔮", image: "image\\Silver\\Hunter Pistol.jpg", desc: "Action - ยิงกระสุนปืน 1 นัดทำดาเมจ 1d8 + Dex Mod" },
   // Varrik
   "Battle-Hardened Body": { icon: "💪", image: "image\\Varrik\\1220.png", desc: "Action - เพิ่มค่า AC 1d2 คงอยู่ 2 เทิร์น" },
   "Fugitive's Instinct": { icon: "👣", image: "image\\Varrik\\1221.png", desc: "Bonus Action - เคลื่อนที่อย่างรวดเร็ว 15 FT" },
@@ -105,6 +134,11 @@ const SKILL_META = {
   "Stellar Bonist": { icon: "🌟", image: "image\\Lumira\\download (88).jpg", desc: "Action - ใช้สมุนไพรเสริมพลังเพื่อนร่วมทีม" },
   "Starry Sleep": { icon: "💤", image: "image\\Lumira\\(Top 10) LOL Best Items for Movement Speed.jpg", desc: "Action - ปล่อยละอองดาวทำให้ศัตรูหลับไหลศัตรูต้องทอย WIS Save 12" },
   "Bless": { icon: "🙏", image: "image\\Lumira\\Ancient script.jpg", desc: "Action - ให้พร blessing แก่เพื่อนร่วมทีม + 1d2 Attack Roll 2 เทิร์น" },
+  "Devil Wings": { icon: "🖤", image: "image\\Lumira\\angel core but red ♡︎.jpg", desc: "Special - กางปีกปีศาจออกเพิ่มพลังโจมตี +1d2 , ลด AC ลง -1d2" },
+  "Judgment Cut": { icon: "⚖️", image: "image\\Lumira\\download (93).jpg", desc: "Action - ฟันทุกคนในระยะ 30 FT ทำดาเมจ 1d6 + WIS Mod * 3" },
+  "Blood Missile": { icon: "🩸", image: "image\\Lumira\\Untitled design (21).png", desc: "Action - ยิงกระสุนเลือดในระยะ 30 FT ทำดาเมจ 1d4 * 3 + Wis Mod" },
+  "Ray": { icon: "🔫", image: "image\\Lumira\\download (90).jpg", desc: "Action - ยิงลำเเสงใส่ศัตรูดูดเลือดจากความเสียหายที่ทำได้ครึ่งนึง 1d6 + Wis Mod" },
+
   // Feryx
   "Spark of Hope": { icon: "🔥", image: "image\\Feryx\\Spark of Hope - Feryx.jpg", desc: "Action - มอบ Bardic Inspiration (d6) ให้เพื่อน 1 คน" },
   "Charming Aria": { icon: "🎵", image: "image\\Feryx\\Untitled design (26).png", desc: "Action - ปล่อย Aura เสน์ห์ในระยะ 10 FT ศัตรูต้องทอย WIS Save 12 หาก Fail จะติด Charm 1 เทิร์น" },
@@ -166,44 +200,130 @@ function createSkillIconEl(meta) {
   return el;
 }
 
-// ============ STATE + LOCAL STORAGE ============
-const STORAGE_KEY = "cooldown-tracker-v1";
+// ============ ACTIVITY LOG ============
+const activityLog = []; // { charName, skillName, action, time }
+const MAX_LOG = 30;
+
+function logAction(charName, skillName, action) {
+  activityLog.unshift({ charName, skillName, action, time: Date.now() });
+  if (activityLog.length > MAX_LOG) activityLog.pop();
+  renderActivityLog();
+}
+
+function renderActivityLog() {
+  const logEl = document.getElementById("dm-activity-log");
+  if (!logEl) return;
+  if (activityLog.length === 0) {
+    logEl.innerHTML = '<div class="log-empty">No actions yet this session.</div>';
+    return;
+  }
+  logEl.innerHTML = activityLog.slice(0, 8).map(entry => {
+    const ago = formatTimeAgo(entry.time);
+    return `<div class="log-entry">
+      <span class="log-char">${entry.charName}</span>
+      <span class="log-skill">${entry.skillName}</span>
+      <span class="log-action log-action-${entry.action.toLowerCase().replace(/\s/g, '-')}">${entry.action}</span>
+      <span class="log-time">${ago}</span>
+    </div>`;
+  }).join("");
+}
+
+function formatTimeAgo(ts) {
+  const s = Math.floor((Date.now() - ts) / 1000);
+  if (s < 5) return "just now";
+  if (s < 60) return s + "s ago";
+  return Math.floor(s / 60) + "m ago";
+}
+
+// อัปเดต time ago ทุก 10 วิ
+setInterval(() => { if (activityLog.length) renderActivityLog(); }, 10000);
+
+// ============ STATE + FIREBASE ============
+const firebaseConfig = {
+  databaseURL: "https://dnd---cooldown-tracker-default-rtdb.asia-southeast1.firebasedatabase.app/"
+};
+
+// เริ่มต้นเปิดใช้งาน Firebase
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+const ROOM_ID = "dnd-session-1"; // ชื่อห้อง (ถ้าเล่นหลายปาร์ตี้ ค่อยมาแก้ตรงนี้ได้)
+
 let turnNumber = 1;
 
 function saveState() {
   const payload = {
     turnNumber,
+    activityLog: activityLog,
     chars: characters.map(c => ({
       name: c.name,
+      mode: c.mode || null,
       skills: c.skills.map(s => ({
         currentProgress: s.currentProgress,
-        active: s.active
+        active: s.active,
+        bulletsLeft: s.bulletsLeft
       }))
     }))
   };
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(payload)); } catch (e) {}
+  // ส่งขึ้น Firebase ทันทีที่มีการกด
+  database.ref('rooms/' + ROOM_ID).set(payload);
 }
 
 function loadState() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return;
-    const data = JSON.parse(raw);
+  // .on('value') คือการ "ดักฟัง" ถ้ามีใครกดปุ่ม ข้อมูลจะเปลี่ยน แล้วมันจะอัปเดตหน้าจอทันที
+  database.ref('rooms/' + ROOM_ID).on('value', (snapshot) => {
+    const data = snapshot.val();
+    if (!data) return; // ถ้าเพิ่งสร้างห้องยังไม่มีข้อมูล ให้ข้ามไปก่อน
+
     if (typeof data.turnNumber === "number") turnNumber = data.turnNumber;
+
     if (Array.isArray(data.chars)) {
       data.chars.forEach(savedChar => {
         const c = characters.find(x => x.name === savedChar.name);
         if (!c) return;
+
+        // จัดการโหมดของ Lumira
+        if (savedChar.mode && c.modes) {
+          c.mode = savedChar.mode;
+          const modeData = c.modes[savedChar.mode];
+          if (modeData) {
+            c.color = modeData.color;
+            if (modeData.portraitImage) c.portraitImage = modeData.portraitImage;
+          }
+        }
+
+        // จัดการสกิล
         savedChar.skills.forEach((s, i) => {
           if (!c.skills[i]) return;
           if (typeof s.currentProgress === "number") c.skills[i].currentProgress = s.currentProgress;
           if (typeof s.active === "boolean") c.skills[i].active = s.active;
+          if (typeof s.bulletsLeft === "number") c.skills[i].bulletsLeft = s.bulletsLeft;
         });
       });
     }
-  } catch (e) {}
-}
 
+    // จัดการ Activity Log
+    if (Array.isArray(data.activityLog)) {
+      activityLog.length = 0;
+      data.activityLog.forEach(log => activityLog.push(log));
+      renderActivityLog();
+    } else {
+      activityLog.length = 0;
+      renderActivityLog();
+    }
+
+    // สั่งวาด UI ใหม่
+    updateDmTurnUi();
+    
+    // ถ้าหน้าจอ DM ไม่ได้ถูกซ่อนอยู่ ให้รีเฟรชหน้า DM
+    if (!dmScreen.classList.contains("hidden")) {
+      renderDm();
+    } 
+    // ถ้าหน้าจอกดสกิลไม่ได้ถูกซ่อนอยู่ ให้รีเฟรชปุ่มสกิล
+    else if (!gameScreen.classList.contains("hidden")) {
+      renderSkills();
+    }
+  });
+}
 // ============ DOM REFS ============
 const characterButtons = document.getElementById("character-buttons");
 const characterSelect = document.getElementById("character-select");
@@ -268,6 +388,11 @@ function createCharacterButtons() {
 }
 
 function loadCharacter(character) {
+  // Lumira ต้องเลือกโหมดก่อน
+  if (character.modes && !character.mode) {
+    showModeSelect(character);
+    return;
+  }
   currentCharacter = character;
   characterSelect.classList.add("hidden");
   dmScreen.classList.add("hidden");
@@ -279,10 +404,70 @@ function loadCharacter(character) {
   const name = document.createElement("h1");
   name.id = "character-name";
   name.textContent = character.name;
-  characterHeader.appendChild(portrait);
-  characterHeader.appendChild(name);
+  // ถ้ามี mode ให้แสดง badge
+  if (character.mode) {
+    const modeBadge = document.createElement("div");
+    modeBadge.classList.add("mode-badge");
+    const modeData = character.modes[character.mode];
+    modeBadge.textContent = modeData.emoji + " " + modeData.label;
+    modeBadge.style.color = modeData.color;
+    characterHeader.appendChild(portrait);
+    characterHeader.appendChild(name);
+    characterHeader.appendChild(modeBadge);
+  } else {
+    characterHeader.appendChild(portrait);
+    characterHeader.appendChild(name);
+  }
 
   renderSkills();
+}
+
+// ============ MODE SELECT (Lumira) ============
+function showModeSelect(character) {
+  characterSelect.classList.add("hidden");
+  const modeScreen = document.getElementById("mode-select-screen");
+  const modeTitle = document.getElementById("mode-select-title");
+  const modeButtons = document.getElementById("mode-select-buttons");
+  const modeBack = document.getElementById("mode-back-button");
+
+  modeTitle.textContent = character.name;
+  modeButtons.innerHTML = "";
+
+  Object.entries(character.modes).forEach(([key, modeData]) => {
+    const btn = document.createElement("button");
+    btn.classList.add("mode-option-btn");
+    btn.style.setProperty("--mode-color", modeData.color);
+
+    // ใช้รูป portrait หลักของตัวละคร ไม่เปลี่ยนตาม mode
+    const portrait = createPortraitEl(character, "large");
+
+    const label = document.createElement("div");
+    label.classList.add("mode-label");
+    label.textContent = modeData.emoji + " " + modeData.label;
+
+    btn.appendChild(portrait);
+    btn.appendChild(label);
+
+    btn.addEventListener("click", () => {
+      // เซ็ต mode และ copy skills จาก mode ที่เลือก
+      character.mode = key;
+      character.color = modeData.color;
+      if (modeData.portraitImage) character.portraitImage = modeData.portraitImage;
+      // reset skills จาก mode template
+      character.skills = JSON.parse(JSON.stringify(modeData.skills));
+      modeScreen.classList.add("hidden");
+      loadCharacter(character);
+    });
+
+    modeButtons.appendChild(btn);
+  });
+
+  modeBack.onclick = () => {
+    modeScreen.classList.add("hidden");
+    characterSelect.classList.remove("hidden");
+  };
+
+  modeScreen.classList.remove("hidden");
 }
 
 // ============ RENDER SKILLS ============
@@ -348,6 +533,19 @@ function renderSkills() {
       card.appendChild(dots);
     }
 
+    // Bullet dots (กระสุน — กดทีละ 1)
+    if (skill.isBullet) {
+      const dots = document.createElement("div");
+      dots.classList.add("dots", "bullet-dots");
+      for (let i = 0; i < skill.maxBullets; i++) {
+        const dot = document.createElement("div");
+        dot.classList.add("dot", "bullet-dot");
+        if (i < skill.bulletsLeft) dot.classList.add("filled");
+        dots.appendChild(dot);
+      }
+      card.appendChild(dots);
+    }
+
     // Active text
     if (skill.canBeActive) {
       const activeText = document.createElement("div");
@@ -366,6 +564,34 @@ function renderSkills() {
     row.classList.add("button-row");
     let btnCount = 0;
 
+    if (skill.isBullet) {
+      const fireBtn = document.createElement("button");
+      fireBtn.textContent = "FIRE";
+      fireBtn.classList.add("use-button", "hit");
+      fireBtn.disabled = skill.bulletsLeft <= 0;
+      fireBtn.addEventListener("click", () => {
+        if (skill.bulletsLeft > 0) {
+          skill.bulletsLeft--;
+          logAction(currentCharacter.name, skill.name, "FIRE");
+          saveState();
+          renderSkills();
+        }
+      });
+      row.appendChild(fireBtn);
+
+      const reloadBtn = document.createElement("button");
+      reloadBtn.textContent = "RELOAD";
+      reloadBtn.classList.add("use-button", "reset");
+      reloadBtn.disabled = skill.bulletsLeft >= skill.maxBullets;
+      reloadBtn.addEventListener("click", () => {
+        skill.bulletsLeft = skill.maxBullets;
+        saveState();
+        renderSkills();
+      });
+      row.appendChild(reloadBtn);
+      btnCount += 2;
+    }
+
     if (skill.hitCooldown === undefined && skill.canUse !== false && skill.maxCooldown !== undefined) {
       const useButton = document.createElement("button");
       useButton.textContent = "USE";
@@ -373,6 +599,7 @@ function renderSkills() {
       useButton.disabled = !ready;
       useButton.addEventListener("click", () => {
         skill.currentProgress = 0;
+        logAction(currentCharacter.name, skill.name, "USE");
         saveState();
         renderSkills();
       });
@@ -387,6 +614,7 @@ function renderSkills() {
       hitButton.disabled = !ready;
       hitButton.addEventListener("click", () => {
         skill.currentProgress = skill.maxCooldown - skill.hitCooldown;
+        logAction(currentCharacter.name, skill.name, "HIT");
         saveState();
         renderSkills();
       });
@@ -398,6 +626,7 @@ function renderSkills() {
       missButton.disabled = !ready;
       missButton.addEventListener("click", () => {
         skill.currentProgress = skill.maxCooldown - skill.missCooldown;
+        logAction(currentCharacter.name, skill.name, "MISS");
         saveState();
         renderSkills();
       });
@@ -425,6 +654,7 @@ function renderSkills() {
       if (skill.active) activeButton.classList.add("on");
       activeButton.addEventListener("click", () => {
         skill.active = !skill.active;
+        logAction(currentCharacter.name, skill.name, skill.active ? "ACTIVATE" : "DEACTIVATE");
         saveState();
         renderSkills();
       });
@@ -473,6 +703,12 @@ endTurnButton.addEventListener("click", () => {
 });
 
 backButton.addEventListener("click", () => {
+  // ถ้าเป็น Lumira ให้ reset mode เพื่อให้เลือกใหม่ได้
+  if (currentCharacter && currentCharacter.modes) {
+    currentCharacter.mode = null;
+    currentCharacter.color = "#ffe100";
+    currentCharacter.portraitImage = "image\\Lumira\\Lumira.png";
+  }
   gameScreen.classList.add("hidden");
   characterSelect.classList.remove("hidden");
 });
@@ -498,10 +734,37 @@ function renderDm() {
       const row = document.createElement("div");
       row.classList.add("dm-skill-row");
 
+      // ซ้าย: icon + ชื่อ + tooltip
       const left = document.createElement("span");
       left.classList.add("name");
+
       const meta = getMeta(s.name);
-      left.textContent = `${meta.icon}  ${s.name}`;
+      const dmIcon = createSkillIconEl(meta);
+      dmIcon.classList.add("dm-skill-icon");
+      left.appendChild(dmIcon);
+
+      const nameSpan = document.createElement("span");
+      nameSpan.classList.add("dm-skill-name-text");
+      nameSpan.textContent = s.name;
+      left.appendChild(nameSpan);
+
+      // tooltip เหมือนผู้เล่น
+      if (meta.desc) {
+        const infoBtn = document.createElement("div");
+        infoBtn.classList.add("skill-info", "dm-skill-info");
+        infoBtn.textContent = "?";
+        infoBtn.tabIndex = 0;
+        const tip = document.createElement("div");
+        tip.classList.add("skill-tooltip");
+        tip.textContent = meta.desc;
+        infoBtn.appendChild(tip);
+        infoBtn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          infoBtn.classList.toggle("open");
+        });
+        left.appendChild(infoBtn);
+      }
+
       row.appendChild(left);
 
       const status = document.createElement("span");
@@ -517,6 +780,10 @@ function renderDm() {
       } else if (s.canBeActive && s.active) {
         status.textContent = "ACTIVE";
         status.classList.add("active");
+      } else if (s.isBullet) {
+        status.textContent = `${s.bulletsLeft}/${s.maxBullets} 🔮`;
+        if (s.bulletsLeft === 0) status.classList.add("inactive");
+        else status.classList.add("ready");
       } else if (s.maxCooldown === undefined) {
         status.textContent = "—";
       } else if (isReady(s)) {
@@ -531,7 +798,21 @@ function renderDm() {
 
     dmContainer.appendChild(wrap);
   });
+  // Activity log panel
+  const logSection = document.createElement("div");
+  logSection.classList.add("dm-log-section");
+  const logTitle = document.createElement("div");
+  logTitle.classList.add("dm-log-title");
+  logTitle.textContent = "📋 Activity Log";
+  const logEntries = document.createElement("div");
+  logEntries.id = "dm-activity-log";
+  logEntries.classList.add("dm-activity-log");
+  logSection.appendChild(logTitle);
+  logSection.appendChild(logEntries);
+  dmContainer.appendChild(logSection);
+
   updateDmTurnUi();
+  renderActivityLog();
 }
 
 // ============ DM PIN ============
