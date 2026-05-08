@@ -32,9 +32,9 @@ const characters = [
     mode: null, 
     modes: {
       angel: {
-        label: "Angel",
+        label: "The Fallen Grace",
         emoji: "",
-        portraitImage: "image/Lumira/Lumira.png",
+        portraitImage: "image\\Lumira\\mercy  _D.jpg",
         color: "#ffe100",
         skills: [
           { name: "Wings", active: false, canBeActive: true, canUse: false },
@@ -44,9 +44,9 @@ const characters = [
         ]
       },
       devil: {
-        label: "Devil",
-        emoji: "🖤",
-        portraitImage: "image/Lumira/Lumira.png",
+        label: "Eclipse of the fallen",
+        emoji: "",
+        portraitImage: "image\\Lumira\\Untitled design (31).png",
         color: "#ff4466",
         skills: [
           { name: "Devil Wings", active: false, canBeActive: true, canUse: false },
@@ -432,7 +432,13 @@ function showModeSelect(character) {
     btn.classList.add("mode-option-btn");
     btn.style.setProperty("--mode-color", modeData.color);
 
-    const portrait = createPortraitEl(character, "large");
+    // ดึงรูปภาพเฉพาะของโหมดนั้นมาใช้ (ถ้าไม่ได้ใส่ไว้ จะใช้รูปหลักแทน)
+    const displayData = {
+      name: modeData.label,
+      portraitImage: modeData.portraitImage || character.portraitImage,
+      portrait: character.portrait
+    };
+    const portrait = createPortraitEl(displayData, "large");
 
     const label = document.createElement("div");
     label.classList.add("mode-label");
@@ -448,7 +454,7 @@ function showModeSelect(character) {
       character.skills = JSON.parse(JSON.stringify(modeData.skills));
       modeScreen.classList.add("hidden");
       loadCharacter(character);
-      saveState(); // อัปเดตโหมดขึ้น Firebase
+      saveState(); // อัปเดตโหมดขึ้น Firebase ทันที
     });
 
     modeButtons.appendChild(btn);
