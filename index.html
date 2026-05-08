@@ -16,6 +16,15 @@
       <button id="dm-mode-button" class="secondary-button">DM Overview</button>
     </div>
 
+    <div id="mode-select-screen" class="hidden">
+      <div class="top-bar">
+        <button id="mode-back-button" class="ghost-button">← Back</button>
+      </div>
+      <h1 id="mode-select-title"></h1>
+      <p class="mode-select-sub">Choose a form</p>
+      <div id="mode-select-buttons" class="mode-select-buttons"></div>
+    </div>
+
     <div id="game-screen" class="hidden">
       <div class="top-bar">
         <button id="back-button" class="ghost-button">← Back</button>
@@ -38,8 +47,7 @@
       </div>
     </div>
 
-    <!-- DM PIN Modal -->
-  <div id="pin-modal" class="pin-overlay hidden">
+    <div id="pin-modal" class="pin-overlay hidden">
   <div class="pin-box">
     <div class="pin-icon">🛡️</div>
     <h2 class="pin-title">DM Access</h2>
@@ -69,6 +77,10 @@
   </div>
 
   </div>
+  
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  
   <script src="script.js"></script>
 </body>
 </html>
