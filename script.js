@@ -805,7 +805,7 @@ dmClearLogButton.addEventListener("click", () => {
 });
 
 // ============ DM PIN ============
-const DM_PIN = "1234"; 
+const DM_PIN = "0610"; 
 let pinInput = "";
 
 const pinModal = document.getElementById("pin-modal");
