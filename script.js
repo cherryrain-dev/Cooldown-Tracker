@@ -680,8 +680,23 @@ function advanceTurn() {
   saveState();
 }
 
+// ฝั่งผู้เล่นกด End Turn
 endTurnButton.addEventListener("click", () => {
-  advanceTurn();
+  if (currentCharacter) {
+    // 1. แจ้งเตือนลง Log ให้ DM เห็นว่าคนนี้จบเทิร์นแล้ว
+    logAction(currentCharacter.name, "Turn", "ENDED");
+    
+    // 2. ฟื้นฟูคูลดาวน์ (เพิ่ม dot) เฉพาะตัวละครนี้ตัวเดียว
+    currentCharacter.skills.forEach(skill => {
+      if (skill.maxCooldown !== undefined && skill.currentProgress < skill.maxCooldown) {
+        skill.currentProgress++;
+      }
+    });
+
+    // 3. เซฟข้อมูลขึ้น Firebase และรีเฟรชหน้าสกิล (ไม่เด้งกลับหน้าเลือกตัวละครแล้ว)
+    saveState();
+    renderSkills();
+  }
 });
 
 backButton.addEventListener("click", () => {
